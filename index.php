@@ -5,10 +5,25 @@
     $path = "./";
     require_once($path."autoloader.php");
     require_once($path."functions.php");
+    require_once($path."db/SQLiteManager.php");
+
+    $id = $_REQUEST["id"];
+    if(!$id) {
+        die("no id");
+    }
+    $db = SQLiteManager\SQLiteManager::getInstance();
+
+    $result = $db->select("feeds", null, ["ID"=>$id]);
+    $feedInfo = $db->fetchArray($result)[0];
+    if(!$feedInfo) {
+        die("bad id ".$id);
+    }
+    $result = $db->select("filters", null, ["feedID"=>$feedInfo["ID"]]);
+    $feedInfo["patterns"] = $db->fetchArray($result);
 
     $feed = new SimplePie();
     $feed->enable_cache(false);
-    $feed->set_feed_url('http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/world/rss.xml');
+    $feed->set_feed_url($feedInfo["feed"]);
     $feed->init();
     // This makes sure that the content is sent to the browser as text/html and the UTF-8 character set (since we didn't change it).
     $feed->handle_content_type();
@@ -59,7 +74,12 @@
         <logo><?= $feed->get_image_url(); ?></logo>
     <?php } ?>
     <updated><?= date("c"); ?></updated> <?php /* WARNING: simplepie doesn't provide ANY feed-level date */ ?>
-    <?php foreach($feed->get_items(0, 5) as $item) { ?>
+    <?php foreach($feed->get_items(0, $feedInfo["maxItems"]) as $item) { ?>
+        <?php
+            if(!filter($item, $feedInfo["patterns"])) {
+                continue;
+            }
+        ?>
         <entry>
             <title><?= $item->get_title(); ?></title>
             <link href="<?= $item->get_permalink(); ?>"/>
@@ -72,7 +92,7 @@
             <?php } ?>
             <summary type="html"><![CDATA[<?= $item->get_description(); ?>]]></summary>
             <?php if($item->get_content(true)) { ?>
-                <content><![CDATA[<?= $item->get_content(true); ?>]]></content>
+                <content type="html"><![CDATA[<?= $item->get_content(true); ?>]]></content>
             <?php } ?>
             <?php if($item->get_authors()) { ?>
                 <?php foreach($item->get_authors() as $author) { ?>

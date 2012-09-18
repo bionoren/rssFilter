@@ -53,4 +53,19 @@
     //-----------------------------
 	//			FUNCTIONS
 	//-----------------------------
+
+	function filter(SimplePie_Item $item, array $patterns) {
+		foreach($patterns as $pattern) {
+			switch($pattern["field"]) {
+				case "title":
+					if(preg_match($pattern["regex"], $item->get_title())) {
+						return false;
+					}
+					break;
+				default:
+					die("Filter not implemented for field ".$pattern["field"]);
+			}
+		}
+		return true;
+	}
 ?>

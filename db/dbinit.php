@@ -15,9 +15,21 @@
 	 *	limitations under the License.
 	 */
 
+	$path = "../";
     require_once("SQLiteManager.php");
 
     $db = SQLiteManager::getInstance();
+
+	$fields = [];
+	$fields[] = new DBField("feed", DBField::STRING);
+	$fields[] = new DBField("maxItems", DBField::NUM, 0);
+	$db->createTable("feeds", $fields);
+
+	$fields = [];
+	$fields[] = new DBField("feedID", DBField::NUM, -1, "feeds", "ID");
+	$fields[] = new DBField("field", DBField::STRING);
+	$fields[] = new DBField("regex", DBField::STRING);
+	$db->createTable("filters", $fields);
 
 	//errorLog
 	$fields = [];

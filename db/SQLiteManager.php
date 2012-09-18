@@ -120,6 +120,22 @@
             return true;
         }
 
+		/**
+         * Runs a simple conditional delete statement.
+         *
+         * @param STRING $table Table name.
+         * @param ARRAY $whereFields Associative array mapping field names to their values for building the where clause.
+         * @return BOOLEAN True if the delete succeeded.
+         */
+        public function delete($table, array $whereFields) {
+            if(empty($table) || empty($whereFields)) {
+                return;
+            }
+
+            $sql = "DELETE FROM ".$table.$this::getWhereClause($whereFields);
+            return $this->query($sql);
+        }
+
         /**
          * Creates a unique constraint in the given table on the given set of fields.
          *
