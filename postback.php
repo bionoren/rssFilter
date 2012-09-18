@@ -38,5 +38,9 @@
         $db->delete("filters", ["ID"=>$_REQUEST["filterID"]]);
     }
 
+    if($mode == "setMaxItems") {
+        $db->update("feeds", ["maxItems"=>$_REQUEST["maxItems"]], ["ID"=>$_REQUEST["feedID"]]);
+    }
+
     header("location:admin.php");
 ?>

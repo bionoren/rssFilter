@@ -10,6 +10,12 @@
     {foreach $feeds as $feed}
         <hr>
         <a href="http://localhost/~bion/rss/index.php?id={$feed["ID"]}">{$feed["feed"]}</a>
+        <form method="post" action="postback.php">
+            <input type="hidden" name="mode" value="setMaxItems">
+            <input type="hidden" name="feedID" value="{$feed["ID"]}">
+            Max Items: <input type="text" name="maxItems" value="{$feed["maxItems"]}">
+            <input type="submit" name="submit" value="Set">
+        </form>
         <table>
             <tr>
                 <td>

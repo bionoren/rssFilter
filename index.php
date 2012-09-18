@@ -74,7 +74,8 @@
         <logo><?= $feed->get_image_url(); ?></logo>
     <?php } ?>
     <updated><?= date("c"); ?></updated> <?php /* WARNING: simplepie doesn't provide ANY feed-level date */ ?>
-    <?php foreach($feed->get_items(0, $feedInfo["maxItems"]) as $item) { ?>
+    <?php $i = 0; ?>
+    <?php foreach($feed->get_items() as $item) { ?>
         <?php
             if(!filter($item, $feedInfo["patterns"])) {
                 continue;
@@ -133,5 +134,6 @@
                 <rights><?= $item->get_copyright(); ?></rights>
             <?php } ?>
         </entry>
+        <?php if(++$i == $feedInfo["maxItems"]) { break; } ?>
     <?php } ?>
 </feed>
