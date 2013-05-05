@@ -62,6 +62,28 @@
 						return false;
 					}
 					break;
+				case "summary":
+					if(preg_match($pattern["regex"], $item->get_description())) {
+						return false;
+					}
+					break;
+				case "content":
+					if(preg_match($pattern["regex"], $item->get_content())) {
+						return false;
+					}
+					break;
+				case "url":
+					if(preg_match($pattern["regex"], $item->get_permalink())) {
+						return false;
+					}
+					break;
+				case "category":
+					foreach($item->get_categories() as $category) {
+						if(preg_match($pattern["regex"], $category->get_term()) || preg_match($pattern["regex"], $category->get_label())) {
+							return false;
+						}
+					}
+					break;
 				default:
 					die("Filter not implemented for field ".$pattern["field"]);
 			}

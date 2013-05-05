@@ -4,7 +4,7 @@
     require_once($path."smarty/Smarty.class.php");
     require_once($path."db/SQLiteManager.php");
 
-    $fields = ["title", "summary", "category", "contributor", "author", "content"];
+    $fields = ["title", "summary", "category", "contributor", "author", "content", "url"];
 
     $db = SQLiteManager\SQLiteManager::getInstance();
 
