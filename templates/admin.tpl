@@ -6,6 +6,11 @@
         <input type="text" name="feed" size="100">
         <input type="submit" name="submit" value="New Feed">
     </form>
+    <form method="post" action="postback.php" id="aggregateForm">
+        <input type="hidden" name="mode" value="addAggregateFeed">
+        <textarea rows="4" cols="100" name="feeds" form="aggregateForm"></textarea>
+        <input type="submit" name="submit" value="Create Aggregate Feed">
+    </form>
     <br>
     {foreach $feeds as $feed}
         <hr>
@@ -68,5 +73,11 @@
                 </form>
             {/foreach}
         </table>
+    {/foreach}
+    Aggregate Feeds
+    <br>
+    {foreach $aggregates as $feed}
+        <hr>
+        <a href="http://localhost/~bion/rss/aggregate.php?id={$feed["ID"]}&threshold=75&minThreshold=true">{$feed["feeds"]|nl2br}</a>
     {/foreach}
 {/block}

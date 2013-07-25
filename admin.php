@@ -11,6 +11,9 @@
     $result = $db->select("feeds");
     $feeds = $db->fetchArray($result);
 
+    $result = $db->select("aggregateFeeds");
+    $aggregates = $db->fetchArray($result);
+
     foreach($feeds as &$feed) {
         $result = $db->select("filters", null, ["feedID"=>$feed["ID"]]);
         $feed["patterns"] = $db->fetchArray($result);
@@ -22,5 +25,6 @@
     $data = new Smarty_Data();
     $data->assign("fields", $fields);
     $data->assign("feeds", $feeds);
+    $data->assign("aggregates", $aggregates);
     $smarty->display("admin.tpl", $data);
 ?>

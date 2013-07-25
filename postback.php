@@ -22,6 +22,22 @@
         $db->insert("feeds", ["feed"=>$_REQUEST["feed"]]);
     }
 
+    if($mode == "addAggregateFeed") {
+        $urls = explode("\n", $_REQUEST["feeds"]);
+
+        foreach($urls as $url) {
+            require_once($path."autoloader.php");
+            $feed = new SimplePie();
+            $feed->enable_cache(false);
+            $feed->set_feed_url($url);
+            $feed->init();
+            if($feed->error()) {
+                throw new InvalidArgumentException($feed->error());
+            }
+        }
+        $db->insert("aggregateFeeds", ["feeds"=>$_REQUEST["feeds"]]);
+    }
+
     if($mode == "addRegex") {
         $regex = "/".$_REQUEST["regex"]."/s";
         if($_REQUEST["caseInsensitive"]) {

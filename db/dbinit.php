@@ -26,6 +26,10 @@
 	$db->createTable("feeds", $fields);
 
 	$fields = [];
+	$fields[] = new DBField("feeds", DBField::STRING);
+	$db->createTable("aggregateFeeds", $fields);
+
+	$fields = [];
 	$fields[] = new DBField("feedID", DBField::NUM, -1, "feeds", "ID");
 	$fields[] = new DBField("field", DBField::STRING);
 	$fields[] = new DBField("regex", DBField::STRING);

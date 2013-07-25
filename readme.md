@@ -6,6 +6,12 @@ regex filters for various components of rss feeds. Useful for filtering:
 * Types of articles (summaries, links to other feeds, categories, etc)
 * Anything else you can find in the feed with a regex
 
+Feed Aggregation (BETA)
+* Only show articles if their titles are sufficiently similar or dissimilar (see http://us1.php.net/manual/en/function.similar-text.php)
+* Article similarity rating shown after article title
+* Useful for only getting major news events or filtering out duplicates across feeds
+* URL customizable filter level - easily tweak filter threshold
+
 Setup
 -----
 Put all files in your web server's document directory.
