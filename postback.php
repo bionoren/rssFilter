@@ -38,6 +38,23 @@
         $db->insert("aggregateFeeds", ["feeds"=>$_REQUEST["feeds"]]);
     }
 
+    if($mode == "updateAggregateFeed") {
+        $urls = explode("\n", $_REQUEST["feeds"]);
+
+        foreach($urls as $url) {
+            require_once($path."autoloader.php");
+            $feed = new SimplePie();
+            $feed->enable_cache(false);
+            $feed->set_feed_url($url);
+            $feed->init();
+            if($feed->error()) {
+                throw new InvalidArgumentException($feed->error());
+            }
+        }
+        $id = $_REQUEST["id"];
+        $db->update("aggregateFeeds", ["feeds"=>$_REQUEST["feeds"]], ["ID"=>$id]);
+    }
+
     if($mode == "addRegex") {
         $regex = "/".$_REQUEST["regex"]."/s";
         if($_REQUEST["caseInsensitive"]) {

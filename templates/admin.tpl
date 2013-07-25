@@ -78,6 +78,14 @@
     <br>
     {foreach $aggregates as $feed}
         <hr>
-        <a href="http://localhost/~bion/rss/aggregate.php?id={$feed["ID"]}&threshold=75&minThreshold=true">{$feed["feeds"]|nl2br}</a>
+        <a href="http://localhost/~bion/rss/aggregate.php?id={$feed["ID"]}&threshold=75&minThreshold=true&grouping=1">{$feed["feeds"]|nl2br}</a>
+        <br>
+        Note: Articles will be sourced from the first feed in the list, all others will simply be used as filters
+        <form method="post" action="postback.php" id="aggregateForm{$feed["ID"]}">
+            <input type="hidden" name="mode" value="updateAggregateFeed">
+            <input type="hidden" name="id" value="{$feed["ID"]}">
+            <textarea rows="4" cols="100" name="feeds" form="aggregateForm{$feed["ID"]}">{$feed["feeds"]}</textarea>
+            <input type="submit" name="submit" value="Update">
+        </form>
     {/foreach}
 {/block}
