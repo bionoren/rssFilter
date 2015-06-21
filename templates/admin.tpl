@@ -16,10 +16,21 @@
         <hr>
         <a href="{$base_url}/index.php?id={$feed["ID"]}">{$feed["feed"]}</a>
         <form method="post" action="postback.php">
-            <input type="hidden" name="mode" value="setMaxItems">
+            <input type="hidden" name="mode" value="setFeedProperties">
             <input type="hidden" name="feedID" value="{$feed["ID"]}">
             Max Items: <input type="text" name="maxItems" value="{$feed["maxItems"]}">
-            <input type="submit" name="submit" value="Set">
+            <br />
+            <select name="blockOrPermit">
+            <option value="block"{if $feed["blockOrPermit"] ne 'permit'} selected="selected"{/if}>Block</option>
+            <option value="permit"{if $feed["blockOrPermit"] eq 'permit'} selected="selected"{/if}>Permit</option>
+            </select>
+            items that match
+            <select name="anyOrAll">
+            <option value="any"{if $feed["anyOrAll"] ne 'all'} selected="selected"{/if}>any</option>
+            <option value="all"{if $feed["anyOrAll"] eq 'all'} selected="selected"{/if}>all</option>
+            </select>
+            of the following rules:
+            <input type="submit" name="submit" value="Save">
         </form>
         <table>
             <tr>

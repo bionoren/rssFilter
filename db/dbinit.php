@@ -23,6 +23,8 @@
 	$fields = [];
 	$fields[] = new DBField("feed", DBField::STRING);
 	$fields[] = new DBField("maxItems", DBField::NUM, 0);
+	$fields[] = new DBField("blockOrPermit", DBField::STRING, "block");
+	$fields[] = new DBField("anyOrAll", DBField::STRING, "any");
 	$db->createTable("feeds", $fields);
 
 	$fields = [];

@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?php 
+header('Content-type: application/atom+xml');
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+?>
 
 <feed xmlns="http://www.w3.org/2005/Atom">
 <?php
@@ -83,7 +86,7 @@
     <?php $i = 0; ?>
     <?php foreach($feed->get_items() as $item) { ?>
         <?php
-            if(!filter($item, $feedInfo["patterns"])) {
+            if(!filter($item, $feedInfo)) {
                 continue;
             }
         ?>
