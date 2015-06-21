@@ -14,7 +14,7 @@
     <br>
     {foreach $feeds as $feed}
         <hr>
-        <a href="http://localhost/~bion/rss/index.php?id={$feed["ID"]}">{$feed["feed"]}</a>
+        <a href="{$base_url}/index.php?id={$feed["ID"]}">{$feed["feed"]}</a>
         <form method="post" action="postback.php">
             <input type="hidden" name="mode" value="setMaxItems">
             <input type="hidden" name="feedID" value="{$feed["ID"]}">
@@ -78,7 +78,7 @@
     <br>
     {foreach $aggregates as $feed}
         <hr>
-        <a href="http://localhost/~bion/rss/aggregate.php?id={$feed["ID"]}&threshold=75&minThreshold=true&grouping=1">{$feed["feeds"]|nl2br}</a>
+        <a href="{$base_url}/aggregate.php?id={$feed["ID"]}&threshold=75&minThreshold=true&grouping=1">{$feed["feeds"]|nl2br}</a>
         <br>
         Note: Articles will be sourced from the first feed in the list, all others will simply be used as filters
         <form method="post" action="postback.php" id="aggregateForm{$feed["ID"]}">

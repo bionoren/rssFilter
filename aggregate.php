@@ -90,7 +90,13 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <?php $feed = $feeds[0]; ?>
     <title><?= $feed->get_title(); ?></title>
-    <link href="http://localhost/~bion/rss/aggregate.php" rel="self"/>
+    <?php 
+    $protocol = 'http';
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+        $protocol = 'https';
+    }
+    ?>
+    <link href="<?= $protocol.'://'.$_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI] ?>" rel="self"/>
     <link href="<?= $feed->get_base(); ?>" />
     <id><?= $feed->get_permalink(); ?></id>
     <?php if($feed->get_authors()) { ?>
