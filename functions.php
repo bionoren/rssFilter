@@ -54,33 +54,113 @@
 	//			FUNCTIONS
 	//-----------------------------
 
-	function filter(SimplePie_Item $item, array $patterns) {
+	function filter(SimplePie_Item $item, array $feedinfo) {
+		$patterns = $feedinfo["patterns"];
+		$anyOrAll = $feedinfo["anyOrAll"];
+		
+		$blockOrPermit = $feedinfo["blockOrPermit"];
+		
+		$result = true;
+		if(($blockOrPermit == 'permit' && $anyOrAll == 'any') || ($blockOrPermit == 'block' && $anyOrAll == 'all')){
+			$result = false;
+		}
+		
 		foreach($patterns as $pattern) {
 			switch($pattern["field"]) {
 				case "title":
 					if(preg_match($pattern["regex"], $item->get_title())) {
-						return false;
+						if($anyOrAll == 'any'){
+							if($blockOrPermit == 'permit'){
+								return true;
+							}else{//$blockOrPermit == 'block'
+								return false;
+							}
+						}
+					}else{
+						if($anyOrAll == 'all'){
+							if($blockOrPermit == 'permit'){
+								return false;
+							}else{//$blockOrPermit == 'block'
+								return true;
+							}
+						}
 					}
 					break;
 				case "summary":
 					if(preg_match($pattern["regex"], $item->get_description())) {
-						return false;
+						if($anyOrAll == 'any'){
+							if($blockOrPermit == 'permit'){
+								return true;
+							}else{//$blockOrPermit == 'block'
+								return false;
+							}
+						}
+					}else{
+						if($anyOrAll == 'all'){
+							if($blockOrPermit == 'permit'){
+								return false;
+							}else{//$blockOrPermit == 'block'
+								return true;
+							}
+						}
 					}
 					break;
 				case "content":
 					if(preg_match($pattern["regex"], $item->get_content())) {
-						return false;
+						if($anyOrAll == 'any'){
+							if($blockOrPermit == 'permit'){
+								return true;
+							}else{//$blockOrPermit == 'block'
+								return false;
+							}
+						}
+					}else{
+						if($anyOrAll == 'all'){
+							if($blockOrPermit == 'permit'){
+								return false;
+							}else{//$blockOrPermit == 'block'
+								return true;
+							}
+						}
 					}
 					break;
 				case "url":
 					if(preg_match($pattern["regex"], $item->get_permalink())) {
-						return false;
+						if($anyOrAll == 'any'){
+							if($blockOrPermit == 'permit'){
+								return true;
+							}else{//$blockOrPermit == 'block'
+								return false;
+							}
+						}
+					}else{
+						if($anyOrAll == 'all'){
+							if($blockOrPermit == 'permit'){
+								return false;
+							}else{//$blockOrPermit == 'block'
+								return true;
+							}
+						}
 					}
 					break;
 				case "category":
 					foreach($item->get_categories() as $category) {
-						if(preg_match($pattern["regex"], $category->get_term()) || preg_match($pattern["regex"], $category->get_label())) {
-							return false;
+						if(preg_match($pattern["regex"], $category->get_term()) || preg_match($pattern["regex"], $category->get_label())){ 
+							if($anyOrAll == 'any'){
+								if($blockOrPermit == 'permit'){
+									return true;
+								}else{//$blockOrPermit == 'block'
+									return false;
+								}
+							}
+						}else{
+							if($anyOrAll == 'all'){
+								if($blockOrPermit == 'permit'){
+									return false;
+								}else{//$blockOrPermit == 'block'
+									return true;
+								}
+							}
 						}
 					}
 					break;
@@ -102,6 +182,6 @@
 					die("Filter not implemented for field ".$pattern["field"]);
 			}
 		}
-		return true;
+		return $result;
 	}
 ?>
