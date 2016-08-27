@@ -167,14 +167,42 @@
 				case "author":
 					foreach($item->get_authors() as $author) {
 						if(preg_match($pattern["regex"], $author->get_name())) {
-							return false;
+							if($anyOrAll == 'any'){
+								if($blockOrPermit == 'permit'){
+									return true;
+								}else{//$blockOrPermit == 'block'
+									return false;
+								}
+							}
+						}else{
+							if($anyOrAll == 'all'){
+								if($blockOrPermit == 'permit'){
+									return false;
+								}else{//$blockOrPermit == 'block'
+									return true;
+								}
+							}
 						}
 					}
 					break;
 				case "contributor":
 					foreach($item->get_contributors() as $contributor) {
 						if(preg_match($pattern["regex"], $contributor->get_name())) {
-							return false;
+							if($anyOrAll == 'any'){
+								if($blockOrPermit == 'permit'){
+									return true;
+								}else{//$blockOrPermit == 'block'
+									return false;
+								}
+							}
+						}else{
+							if($anyOrAll == 'all'){
+								if($blockOrPermit == 'permit'){
+									return false;
+								}else{//$blockOrPermit == 'block'
+									return true;
+								}
+							}
 						}
 					}
 					break;
