@@ -84,6 +84,20 @@
 						}
 					}
 					break;
+				case "author":
+					foreach($item->get_authors() as $author) {
+						if(preg_match($pattern["regex"], $author->get_name())) {
+							return false;
+						}
+					}
+					break;
+				case "contributor":
+					foreach($item->get_contributors() as $contributor) {
+						if(preg_match($pattern["regex"], $contributor->get_name())) {
+							return false;
+						}
+					}
+					break;
 				default:
 					die("Filter not implemented for field ".$pattern["field"]);
 			}
