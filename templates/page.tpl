@@ -6,7 +6,6 @@
         <meta name="language" content="en"/>
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
-        <link rel="stylesheet" type="text/css" href="layout/screen.css" media="screen,projection"/>
     </head>
     <body lang="en">
         <div class="wrapper">
