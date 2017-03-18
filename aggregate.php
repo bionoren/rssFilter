@@ -85,12 +85,15 @@
     }
 ?>
 
-<?xml version="1.0" encoding="utf-8"?>
+<?php
+header('Content-type: application/atom+xml');
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+?>
 
 <feed xmlns="http://www.w3.org/2005/Atom">
     <?php $feed = $feeds[0]; ?>
     <title><?= $feed->get_title(); ?></title>
-    <?php 
+    <?php
     $protocol = 'http';
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
         $protocol = 'https';

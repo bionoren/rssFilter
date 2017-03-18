@@ -71,8 +71,18 @@
         $db->delete("filters", ["ID"=>$_REQUEST["filterID"]]);
     }
 
-    if($mode == "setMaxItems") {
+    if($mode == "setFeedProperties") {
+	$anyOrAll = $_REQUEST["anyOrAll"];
+	if($anyOrAll != 'all') {
+		$anyOrAll = 'any';
+	}
+	$blockOrPermit = $_REQUEST["blockOrPermit"];
+	if($blockOrPermit != 'permit'){
+		$blockOrPermit = 'block';
+	}
         $db->update("feeds", ["maxItems"=>$_REQUEST["maxItems"]], ["ID"=>$_REQUEST["feedID"]]);
+        $db->update("feeds", ["anyOrAll"=>$anyOrAll], ["ID"=>$_REQUEST["feedID"]]);
+        $db->update("feeds", ["blockOrPermit"=>$blockOrPermit], ["ID"=>$_REQUEST["feedID"]]);
     }
 
     header("location:admin.php");
